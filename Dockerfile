@@ -1,4 +1,4 @@
-FROM python:3.9.1-buster
+FROM python:3.9.2-slim-buster
 
 WORKDIR /root/bot
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN pip3 install --upgrade pip setuptools
 
-RUN pip install -U -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 # Starting Worker
 CMD ["python3","-m","bot"]
