@@ -29,11 +29,12 @@ def _download(client, message):
         link, filename = link.split('|')
         link = link.strip()
         filename.strip()
-        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}/{filename}')
+        #dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}/{filename}')
+        dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       else:
         link = link.strip()
         filename = os.path.basename(link)
-        dl_path = DOWNLOAD_DIRECTORY
+        dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       LOGGER.info(f'Download:{user_id}: {link}')
       sent_message.edit(Messages.DOWNLOADING.format(link))
       #result, file_path = download_file(link, dl_path)
