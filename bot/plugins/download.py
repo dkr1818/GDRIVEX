@@ -11,19 +11,19 @@ from bot.config import Messages, BotCommands
 from pyrogram.errors import FloodWait, RPCError
 
 @Client.on_message(filters.private & filters.incoming & filters.text & (filters.command(BotCommands.Download) | filters.regex('^(ht|f)tp*')) & CustomFilters.auth_users)
-def _download(client, message):
+async def _download(client, message):
   user_id = message.from_user.id
   if not message.media:
-    sent_message = message.reply_text('🕵️**Checking link...**', quote=True)
+    sent_message = await message.reply_text('🕵️**Checking link...**', quote=True)
     if message.command:
       link = message.command[1]
     else:
       link = message.text
     if 'drive.google.com' in link:
-      sent_message.edit(Messages.CLONING.format(link))
+      await sent_message.edit(Messages.CLONING.format(link))
       LOGGER.info(f'Copy:{user_id}: {link}')
       msg = GoogleDrive(user_id).clone(link)
-      sent_message.edit(msg)
+      await sent_message.edit(msg)
     else:
       if '|' in link:
         link, filename2 = link.split('|')
@@ -36,21 +36,21 @@ def _download(client, message):
         filename = os.path.basename(link)
         dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       LOGGER.info(f'Download:{user_id}: {link}')
-      sent_message.edit(Messages.DOWNLOADING.format(link))
+      await sent_message.edit(Messages.DOWNLOADING.format(link))
       #result, file_path = download_file(link, dl_path)
       try:
         start = time.time()
-        file_path = download_file(link, dl_path, sent_message, start, client)
-        sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+        file_path = await download_file(link, dl_path, sent_message, start, client)
+        await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         msg = GoogleDrive(user_id).upload_file(file_path)
-        sent_message.edit(msg)
+        await sent_message.edit(msg)
         LOGGER.info(f'Deleteing: {file_path}')
         os.remove(file_path)
       except Exception as e:
           print(e)
-          sent_message.edit(f"Error:\n\n{e}\n\n{link}\n\n{dl_path}\n\n{start}")
+          await sent_message.edit(f"Error:\n\n{e}\n\n{link}\n\n{dl_path}\n\n{start}")
           if file_path:
-            message.reply_text(text=f"path: {file_path}", quote=True)
+            await message.reply_text(text=f"path: {file_path}", quote=True)
         
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 def _telegram_file(client, message):
