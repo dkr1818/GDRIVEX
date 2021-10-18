@@ -37,19 +37,18 @@ def _download(client, message):
       LOGGER.info(f'Download:{user_id}: {link}')
       sent_message.edit(Messages.DOWNLOADING.format(link))
       #result, file_path = download_file(link, dl_path)
-      start = time.time()
-      file_path = download_file(link, dl_path, sent_message, start, client)
-      #if result == True:
-      if os.path.getsize(file_path):
+      try:
+        start = time.time()
+        file_path = download_file(link, dl_path, sent_message, start, client)
         sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         msg = GoogleDrive(user_id).upload_file(file_path)
         sent_message.edit(msg)
         LOGGER.info(f'Deleteing: {file_path}')
         os.remove(file_path)
-      else:
-        sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
-
-
+      except Exception as e:
+          print(e)
+          sent_message.edit(f"Error:\n\n{e}")
+        
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 def _telegram_file(client, message):
   user_id = message.from_user.id
