@@ -26,10 +26,10 @@ def _download(client, message):
       sent_message.edit(msg)
     else:
       if '|' in link:
-        link, filename = link.split('|')
+        link, filename2 = link.split('|')
         link = link.strip()
-        filename.strip()
-        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}/{filename}')
+        filename = filename2.strip()
+        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}{filename}')
         #dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       else:
         link = link.strip()
