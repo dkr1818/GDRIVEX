@@ -38,7 +38,7 @@ def _download(client, message):
       sent_message.edit(Messages.DOWNLOADING.format(link))
       #result, file_path = download_file(link, dl_path)
       start = time.time()
-      file_path = download_file(link, dl_path, msg, start, client)
+      file_path = download_file(link, dl_path, sent_message, start, client)
       #if result == True:
       if os.path.getsize(file_path):
         sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
