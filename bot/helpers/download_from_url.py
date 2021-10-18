@@ -1,6 +1,7 @@
 import aiohttp
 import os
 import time
+import asyncio
 
 def get_size(size):
     units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB"]
