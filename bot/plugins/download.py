@@ -29,8 +29,8 @@ def _download(client, message):
         link, filename = link.split('|')
         link = link.strip()
         filename.strip()
-        #dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}/{filename}')
-        dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
+        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}/{filename}')
+        #dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       else:
         link = link.strip()
         filename = os.path.basename(link)
@@ -48,7 +48,9 @@ def _download(client, message):
         os.remove(file_path)
       except Exception as e:
           print(e)
-          sent_message.edit(f"Error:\n\n{e}")
+          sent_message.edit(f"Error:\n\n{e}\n\n{link}\n\n{dl_path}\n\n{start}")
+          if file_path:
+            message.reply_text(text=f"path: {file_path}", quote=True)
         
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 def _telegram_file(client, message):
