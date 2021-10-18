@@ -1,5 +1,5 @@
 import os
-from time import sleep
+import time
 from pyrogram import Client, filters
 from bot.helpers.sql_helper import gDriveDB, idsDB
 from bot.helpers.utils import CustomFilters, humanbytes
@@ -36,8 +36,11 @@ def _download(client, message):
         dl_path = DOWNLOAD_DIRECTORY
       LOGGER.info(f'Download:{user_id}: {link}')
       sent_message.edit(Messages.DOWNLOADING.format(link))
-      result, file_path = download_file(link, dl_path)
-      if result == True:
+      #result, file_path = download_file(link, dl_path)
+      start = time.time()
+      file_path = await download_file(link, dl_path, msg, start, Client)
+      #if result == True:
+      if os.path.getsize(file_path):
         sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         msg = GoogleDrive(user_id).upload_file(file_path)
         sent_message.edit(msg)
