@@ -4,7 +4,7 @@ class config:
     API_HASH = ""
     DATABASE_URL = ""
     SUDO_USERS = "" # Sepearted by space.
-    DOWNLOAD_DIRECTORY = "./downloads/"
+    DOWNLOAD_DIRECTORY = "downloads/"
     G_DRIVE_CLIENT_ID = ""
     G_DRIVE_CLIENT_SECRET = ""
     SUPPORT_CHAT_LINK = ""
