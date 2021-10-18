@@ -8,7 +8,7 @@ from youtube_dl import DownloadError
 from bot import DOWNLOAD_DIRECTORY, LOGGER
 
 
-def download_file(url, dl_path):
+def download_file2(url, dl_path):
   try:
     dl = SmartDL(url, dl_path, progress_bar=False)
     LOGGER.info(f'Downloading: {url} in {dl_path}')
