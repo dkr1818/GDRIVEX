@@ -1,7 +1,7 @@
 import os
 import shutil
-import filetype
-import moviepy.editor
+#import filetype
+#import moviepy.editor
 import time
 import asyncio
 import logging
@@ -10,11 +10,11 @@ import datetime
 from mega import Mega
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from hurry.filesize import size
-from megadl.progress import progress_for_pyrogram, humanbytes
-from megadl.forcesub import handle_force_subscribe
-from config import Config
-from megadl.file_handler import send_to_transfersh_async, progress
+#from hurry.filesize import size
+#from megadl.progress import progress_for_pyrogram, humanbytes
+#from megadl.forcesub import handle_force_subscribe
+#from config import Config
+#from megadl.file_handler import send_to_transfersh_async, progress
 
 # Logging
 
@@ -65,3 +65,4 @@ async def megadl(bot, message):
         await download_start.delete()
         shutil.rmtree(basedir + "/" + userpath)
         return
+    return magapylol
