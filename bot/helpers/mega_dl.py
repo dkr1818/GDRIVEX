@@ -15,6 +15,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 #from megadl.forcesub import handle_force_subscribe
 #from config import Config
 #from megadl.file_handler import send_to_transfersh_async, progress
+from bot import DOWNLOAD_DIRECTORY
 
 # Logging
 
@@ -26,7 +27,7 @@ mega = Mega()
 m = mega.login()
 
 # path we gonna give the download
-basedir = Config.DOWNLOAD_LOCATION
+basedir = DOWNLOAD_DIRECTORY
 
 # Automatic Url Detect (From OneDLBot)
 MEGA_REGEX = (r"^((?:https?:)?\/\/)"
@@ -38,14 +39,11 @@ MEGA_REGEX = (r"^((?:https?:)?\/\/)"
 
 #@Client.on_message(filters.regex(MEGA_REGEX) & filters.private & filters.incoming & ~filters.edited)
 async def megadl(bot, message):
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, message)
-      if fsub == 400:
-        return
+
     url = message.text
     user = f'[Upload Done!](tg://user?id={message.from_user.id})'
     userpath = str(message.from_user.id)
-    alreadylol = basedir + "/" + userpath
+    alreadylol = basedir + userpath
     if not os.path.isdir(alreadylol):
         megadldir = os.makedirs(alreadylol)
     try:
