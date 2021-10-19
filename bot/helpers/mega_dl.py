@@ -48,18 +48,18 @@ async def megadl(bot, message):
         megadldir = os.makedirs(alreadylol)
     try:
         download_msg = await message.reply_text(text=f"**Downloading:** `{url}` \n\nThis Process May Take Some Time 🤷‍♂️!", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Cancel Mega DL", callback_data="cancel")]]), reply_to_message_id=message.message_id)
-        ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
-        bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
-        now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
-        download_start = await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Busy Now !!** \n\nDownload Started at `{now}`", parse_mode="markdown")
+        #ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
+        #bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
+        #now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
+        #download_start = await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Busy Now !!** \n\nDownload Started at `{now}`", parse_mode="markdown")
         magapylol = m.download_url(url, alreadylol)
         await download_msg.edit("**Downloaded Successfully 😉!**")
     except Exception as e:
         await download_msg.edit(f"**Error:** `{e}`")
-        ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
-        bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
-        now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
-        await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Free Now !!** \n\nProcess Done at `{now}`", parse_mode="markdown")
+        #ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
+        #bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
+        #now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
+        #await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Free Now !!** \n\nProcess Done at `{now}`", parse_mode="markdown")
         await download_start.delete()
         shutil.rmtree(basedir + "/" + userpath)
         return
