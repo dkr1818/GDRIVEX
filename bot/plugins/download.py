@@ -5,7 +5,8 @@ from bot.helpers.sql_helper import gDriveDB, idsDB
 from bot.helpers.utils import CustomFilters, humanbytes
 from bot.helpers.downloader import download_file2, utube_dl
 from bot.helpers.download_from_url import download_file, get_size
-from bot.helpers.gdrive_utils import GoogleDrive 
+from bot.helpers.gdrive_utils import GoogleDrive
+from bot.helpers.mega_dl import megadl
 from bot import DOWNLOAD_DIRECTORY, LOGGER
 from bot.config import Messages, BotCommands
 from pyrogram.errors import FloodWait, RPCError
@@ -24,6 +25,13 @@ async def _download(client, message):
       LOGGER.info(f'Copy:{user_id}: {link}')
       msg = GoogleDrive(user_id).clone(link)
       await sent_message.edit(msg)
+    elif 'mega.nz' in link:
+      download_msg = await sent_message.edit(f"**Downloading:** `{link}` \n\nThis Process May Take Some Time 🤷‍♂️!")
+      file_path = await megadl(client, message)
+      msg = GoogleDrive(user_id).upload_file(file_path)
+      await sent_message.edit(msg)
+      LOGGER.info(f'Deleteing: {file_path}')
+      os.remove(file_path)
     else:
       if '|' in link:
         link, filename2 = link.split('|')
