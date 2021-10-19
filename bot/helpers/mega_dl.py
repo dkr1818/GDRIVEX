@@ -54,7 +54,7 @@ async def megadl(client, message):
         #download_start = await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Busy Now !!** \n\nDownload Started at `{now}`", parse_mode="markdown")
         magapylol = m.download_url(url, alreadylol)
         await download_msg.edit("**Downloaded Successfully 😉!**")
-        return magapylol
+        return str(magapylol)
     except Exception as e:
         await download_msg.edit(f"**Error:** `{e}`")
         #ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
