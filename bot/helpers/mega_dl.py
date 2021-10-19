@@ -38,7 +38,7 @@ MEGA_REGEX = (r"^((?:https?:)?\/\/)"
 
 
 #@Client.on_message(filters.regex(MEGA_REGEX) & filters.private & filters.incoming & ~filters.edited)
-async def megadl(bot, message):
+async def megadl(client, message):
 
     url = message.text
     user = f'[Upload Done!](tg://user?id={message.from_user.id})'
