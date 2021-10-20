@@ -10,6 +10,7 @@ from bot.helpers.mega_dl import megadl
 from bot import DOWNLOAD_DIRECTORY, LOGGER
 from bot.config import Messages, BotCommands
 from pyrogram.errors import FloodWait, RPCError
+from bot.helpers.display_progress import progress_for_pyrogram
 
 @Client.on_message(filters.private & filters.incoming & filters.text & (filters.command(BotCommands.Download) | filters.regex('^(ht|f)tp*')) & CustomFilters.auth_users)
 async def _download(client, message):
@@ -76,7 +77,16 @@ def _telegram_file(client, message):
   	file.file_name = f"IMG-{user_id}-{message.message_id}.png"
   sent_message.edit(Messages.DOWNLOAD_TG_FILE.format(file.file_name, humanbytes(file.file_size), file.mime_type))
   LOGGER.info(f'Download:{user_id}: {file.file_id}')
-  file_path = message.download(file_name=DOWNLOAD_DIRECTORY)
+  c_time = time.time()
+  file_path = message.download(
+    file_name=DOWNLOAD_DIRECTORY,
+    progress=progress_for_pyrogram,
+    progress_args=(
+      "Downloading Status ...",
+      sent_message,
+      c_time
+    )
+  )
   sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
   msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   sent_message.edit(msg)
