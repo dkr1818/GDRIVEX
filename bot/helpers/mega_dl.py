@@ -38,7 +38,7 @@ MEGA_REGEX = (r"^((?:https?:)?\/\/)"
 
 
 #@Client.on_message(filters.regex(MEGA_REGEX) & filters.private & filters.incoming & ~filters.edited)
-async def megadl(client, message):
+async def megadl(client, message, sent_message):
 
     url = message.text
     user = f'[Upload Done!](tg://user?id={message.from_user.id})'
@@ -47,20 +47,10 @@ async def megadl(client, message):
     if not os.path.isdir(alreadylol):
         megadldir = os.makedirs(alreadylol)
     try:
-        download_msg = await message.reply_text(text=f"**Downloading:** `{url}` \n\nThis Process May Take Some Time 🤷‍♂️!", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Cancel Mega DL", callback_data="cancel")]]), reply_to_message_id=message.message_id)
-        #ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
-        #bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
-        #now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
-        #download_start = await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Busy Now !!** \n\nDownload Started at `{now}`", parse_mode="markdown")
+        await sent_message.edit(f"**Downloading:** `{url}` \n\nThis Process May Take Some Time 🤷‍♂️!", reply_to_message_id=message.message_id)
         magapylol = m.download_url(url, alreadylol)
-        download_msg.delete()
         return str(magapylol)
     except Exception as e:
-        await download_msg.edit(f"**Error:** `{e}`")
-        #ist = (datetime.datetime.utcnow() + datetime.timedelta(minutes=30, hours=5)).strftime("%d/%m/%Y, %H:%M:%S")
-        #bst = (datetime.datetime.utcnow() + datetime.timedelta(minutes=00, hours=6)).strftime("%d/%m/%Y, %H:%M:%S")
-        #now = f"\n{ist} (GMT+05:30)`\n`{bst} (GMT+06:00)"
-        #await bot.send_message(Config.LOG_CHANNEL, f"**Bot Become Free Now !!** \n\nProcess Done at `{now}`", parse_mode="markdown")
-        #await download_start.delete()
+        await sent_message.edit(f"**Error:** `{e}`")
         shutil.rmtree(basedir + "/" + userpath)
         return
