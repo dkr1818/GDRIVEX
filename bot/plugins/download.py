@@ -27,8 +27,8 @@ async def _download(client, message):
       msg = GoogleDrive(user_id).clone(link)
       await sent_message.edit(msg)
     elif 'mega.nz' in link:
-      download_msg = await sent_message.edit(f"**Downloading:** `{link}` \n\nThis Process May Take Some Time 🤷‍♂️!")
-      file_path = await megadl(client, message)
+      #download_msg = await sent_message.edit(f"**Downloading:** `{link}` \n\nThis Process May Take Some Time 🤷‍♂️!")
+      file_path = await megadl(client, message, sent_message)
       msg = GoogleDrive(user_id).upload_file(file_path)
       await sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
