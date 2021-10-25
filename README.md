@@ -26,7 +26,7 @@
 
 ### Deploy on Railway
 
-[![Deploy To Railway](https://railway.app/button.svg)](https://railway.app)
+[![Deploy To Railway](https://railway.app/button.svg)](https%3A%2F%2Frailway.app%2Fnew%2Ftemplate%3Ftemplate%3Dhttps%3A%2F%2Fgithub.com%2Fprxpostern%2FGDUPLOAD_BOT2%26envs%3DAPI_ID%2CAPI_HASH%2CBOT_TOKEN%2CSUDO_USERS%2CDATABASE_URL%2CDOWNLOAD_DIRECTORY%2CENV%2CG_DRIVE_CLIENT_ID%2CG_DRIVE_CLIENT_SECRET%2CSUPPORT_CHAT_LINK%26optionalEnvs%3DDATABASE_URL%26G_DRIVE_CLIENT_IDDefault%3D202264815644.apps.googleusercontent.com%26G_DRIVE_CLIENT_SECRETDefault%3DX4Z3ca8xfWDb1Voo-F9a7ZxJ%26ENVDefault%3DANYTHING%26DOWNLOAD_DIRECTORYDefault%3D.%2Fdownloads%2F)
 
 ### Deploy on Qovery
 
