@@ -47,7 +47,7 @@ async def megadl(client, message, sent_message):
     if not os.path.isdir(alreadylol):
         megadldir = os.makedirs(alreadylol)
     try:
-        await sent_message.edit(f"**Downloading:** `{url}` \n\nThis Process May Take Some Time 🤷‍♂️!")
+        await sent_message.edit(f"**Downloading:**\n\n`{url}`")
         magapylol = m.download_url(url, alreadylol)
         return str(magapylol)
     except Exception as e:
