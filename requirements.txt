@@ -16,3 +16,4 @@ tenacity
 aiohttp
 requests
 mega.py
+python-dotenv
