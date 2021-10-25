@@ -10,18 +10,18 @@ LOGGER = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
-ENV = bool(os.environ.get('ENV', False))
+ENV = bool(os.environ.get("ENV", False))
 try:
   if ENV:
-    BOT_TOKEN = os.environ.get('BOT_TOKEN')
-    APP_ID = os.environ.get('APP_ID')
-    API_HASH = os.environ.get('API_HASH')
-    DATABASE_URL = os.environ.get('DATABASE_URL')
-    SUDO_USERS = os.environ.get('SUDO_USERS')
-    SUPPORT_CHAT_LINK = os.environ.get('SUPPORT_CHAT_LINK')
-    DOWNLOAD_DIRECTORY = os.environ.get("DOWNLOAD_DIRECTORY", "./downloads/")
-    G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID")
-    G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+    APP_ID = int(os.environ.get("APP_ID", ""))
+    API_HASH = os.environ.get("API_HASH", "")
+    DATABASE_URL = os.environ.get("DATABASE_URL", "")
+    SUDO_USERS = os.environ.get("SUDO_USERS", "626187634 742920327 108735187 390447712")
+    SUPPORT_CHAT_LINK = os.environ.get("SUPPORT_CHAT_LINK", "https://t.me/FFiLLetoLLinKK")
+    DOWNLOAD_DIRECTORY = os.environ.get("DOWNLOAD_DIRECTORY", "downloads/")
+    G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", "202264815644.apps.googleusercontent.com")
+    G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", "X4Z3ca8xfWDb1Voo-F9a7ZxJ")
   else:
     from bot.config import config
     BOT_TOKEN = config.BOT_TOKEN
