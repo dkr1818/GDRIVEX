@@ -39,8 +39,7 @@
       "value": "X4Z3ca8xfWDb1Voo-F9a7ZxJ"
     },
     "DATABASE_URL": {
-      "description": "Google Drive Client ID from Google Cloud Platform",
-      "value": "202264815644.apps.googleusercontent.com"
+      "description": "Google Drive Client ID from Google Cloud Platform"
     }
   },
   "addons": [{
