@@ -22,7 +22,7 @@
 ## Deploying
 
 ### Deploy on Heroku
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/kjeymax/GDUPLOAD_BOT2)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/prxpostern/GDUPLOAD_BOT2)
 
 ### Deploy on Railway
 
@@ -65,6 +65,12 @@ pip3 install -r requirements.txt
 - `SUDO_USERS` - List of Telegram User ID of sudo users, seperated by space.
 - `DATABASE_URL` - Postgres database url.
 - `DOWNLOAD_DIRECTORY` - Custom path for downloads. Must end with a forward `/` slash. (Default to `./downloads/`)
+- `ENV` - ANYTHING
+- `G_DRIVE_CLIENT_ID` - 202264815644.apps.googleusercontent.com
+- `G_DRIVE_CLIENT_SECRET` - X4Z3ca8xfWDb1Voo-F9a7ZxJ
+- `SUDO_USERS` - 1331188677 956524656
+- `SUPPORT_CHAT_LINK` - t.me
+
 
 ### Deploy 
 ```sh 
