@@ -30,6 +30,9 @@ async def _download(client, message):
       await sent_message.edit(msg)
     elif 'mega.nz' in link:
       file_path = await megadl(client, message, sent_message)
+      if file_path == "error":
+        await sent_message.edit(f"Error Occurred !\n\n")
+        return
       await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       msg = GoogleDrive(user_id).upload_file(file_path)
       await sent_message.edit(msg)
