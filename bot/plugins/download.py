@@ -131,7 +131,10 @@ def _ytdl(client, message):
       msg = GoogleDrive(user_id).upload_file(file_path)
       sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
-      os.remove(file_path)
+      try:
+        os.remove(file_path)
+      except:
+        pass
     else:
       sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
   else:
