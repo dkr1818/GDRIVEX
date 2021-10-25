@@ -43,21 +43,22 @@
       "value": "202264815644.apps.googleusercontent.com"
     }
   },
-    "addons": [{
-      "plan": "heroku-postgresql"
+  "addons": [{
+    "plan": "heroku-postgresql"
   }],
-    "buildpacks": [
-      {
-        "url": "heroku/python"
-      },
-      {
-        "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
-      }
-    ],
-    "formation": {
-      "worker": {
-        "quantity": 1,
-        "size": "free"
-      }
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
     }
+  ],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "stack": "heroku-20"
 }
