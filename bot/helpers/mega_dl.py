@@ -53,4 +53,5 @@ async def megadl(client, message, sent_message):
     except Exception as e:
         await sent_message.edit(f"**Error:** `{e}`")
         shutil.rmtree(basedir + "/" + userpath)
-        return
+        magapylol = "error"
+        return magapylol
