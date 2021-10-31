@@ -90,8 +90,10 @@ async def _download(client, message):
             os.remove(file_path)
           except:
             pass
+          return
         else:
           sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
+          return
       
       await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       msg = GoogleDrive(user_id).upload_file(file_path)
