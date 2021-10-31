@@ -59,6 +59,14 @@ async def _download(client, message):
         file_path = await download_file(link, dl_path, sent_message, start, client)
         await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         msg = GoogleDrive(user_id).upload_file(file_path)
+        if 'rateLimitExceeded' in msg:
+          sent_message.edit(f"{msg}\n\n trying again in 10 sec")
+          await asyncio.sleep(10)
+          msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+          if 'rateLimitExceeded' in msg:
+            sent_message.edit(f"{msg}\n\n trying again in 30 sec")
+            await asyncio.sleep(30)
+            msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
         await sent_message.edit(msg)
         LOGGER.info(f'Deleteing: {file_path}')
         try:
@@ -68,7 +76,6 @@ async def _download(client, message):
       except Exception as e:
           print(e)
           sw = "bbb"
-          #await sent_message.edit(f"Error:\n\n{e}")
 
       if sw == "bbb":
         await sent_message.edit(f"Trying to Download with second method !\n\n`{link}`")
@@ -76,6 +83,14 @@ async def _download(client, message):
         if result == True:
           await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
           msg = GoogleDrive(user_id).upload_file(file_path)
+          if 'rateLimitExceeded' in msg:
+            sent_message.edit(f"{msg}\n\n trying again in 10 sec")
+            await asyncio.sleep(10)
+            msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+            if 'rateLimitExceeded' in msg:
+              sent_message.edit(f"{msg}\n\n trying again in 30 sec")
+              await asyncio.sleep(30)
+              msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
           await sent_message.edit(msg)
           LOGGER.info(f'Deleteing: {file_path}')
           try:
@@ -115,12 +130,12 @@ def _telegram_file(client, message):
   sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
   msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   if 'rateLimitExceeded' in msg:
-    sent_message.edit(f"{msg}\n\n trying again in 5 sec")
-    await asyncio.sleep(5)
+    sent_message.edit(f"{msg}\n\n trying again in 10 sec")
+    await asyncio.sleep(10)
     msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
     if 'rateLimitExceeded' in msg:
-      sent_message.edit(f"{msg}\n\n trying again in 5 sec")
-      await asyncio.sleep(5)
+      sent_message.edit(f"{msg}\n\n trying again in 30 sec")
+      await asyncio.sleep(30)
       msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   sent_message.edit(msg)
   LOGGER.info(f'Deleteing: {file_path}')
@@ -141,6 +156,14 @@ def _ytdl(client, message):
     if result:
       sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       msg = GoogleDrive(user_id).upload_file(file_path)
+      if 'rateLimitExceeded' in msg:
+        sent_message.edit(f"{msg}\n\n trying again in 10 sec")
+        await asyncio.sleep(10)
+        msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+        if 'rateLimitExceeded' in msg:
+          sent_message.edit(f"{msg}\n\n trying again in 30 sec")
+          await asyncio.sleep(30)
+          msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
       sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
       try:
