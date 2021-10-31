@@ -1,5 +1,6 @@
 import os
 import time
+import asyncio
 from pyrogram import Client, filters
 from bot.helpers.sql_helper import gDriveDB, idsDB
 from bot.helpers.utils import CustomFilters, humanbytes
@@ -113,6 +114,14 @@ def _telegram_file(client, message):
   )
   sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
   msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+  if 'rateLimitExceeded' in msg:
+    sent_message.edit(f"{msg}\n\n trying again in 5 sec")
+    await asyncio.sleep(5)
+    msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+    if 'rateLimitExceeded' in msg:
+      sent_message.edit(f"{msg}\n\n trying again in 5 sec")
+      await asyncio.sleep(5)
+      msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   sent_message.edit(msg)
   LOGGER.info(f'Deleteing: {file_path}')
   try:
