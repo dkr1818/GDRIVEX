@@ -30,20 +30,29 @@ async def _download(client, message):
       msg = GoogleDrive(user_id).clone(link)
       await sent_message.edit(msg)
     elif 'mega.nz' in link:
+      LOGGER.info(f'ID:{user_id} URL: {link}')
       file_path = await megadl(client, message, sent_message)
       if file_path == "error":
         await sent_message.edit(f"Error Occurred !\n\nTry Again Later.")
+        LOGGER.info(f'MegaDL Failed !')
         return
+      LOGGER.info(f'SUCCESSFULLY DOWNLOADED . URL: {link} DST_Folder: {file_path}')
       await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+      
       msg = GoogleDrive(user_id).upload_file(file_path)
+      LOGGER.info(f'msg : {msg}')
       if 'rateLimitExceeded' in msg:
         sent_message.edit(f"{msg}\n\n trying again in 10 sec")
         await asyncio.sleep(10)
         msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
         if 'rateLimitExceeded' in msg:
-          sent_message.edit(f"{msg}\n\n trying again in 30 sec")
-          await asyncio.sleep(30)
+          sent_message.edit(f"{msg}\n\n trying again in 10 sec")
+          await asyncio.sleep(10)
           msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+        else:
+          LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
+      else:
+        LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
       await sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
       try:
@@ -61,7 +70,7 @@ async def _download(client, message):
         filename = os.path.basename(link)
         dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       
-      LOGGER.info(f'Download:{user_id}: {link}')
+      LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
       await sent_message.edit(Messages.DOWNLOADING.format(link))
       
       result, file_path = download_file2(link, dl_path)
