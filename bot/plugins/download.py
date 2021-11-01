@@ -40,12 +40,13 @@ async def _download(client, message):
       await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       
       msg = GoogleDrive(user_id).upload_file(file_path)
-      LOGGER.info(f'msg : {msg}')
       if 'rateLimitExceeded' in msg:
+        LOGGER.info(f'msg : {msg}')
         sent_message.edit(f"{msg}\n\n trying again in 10 sec")
         await asyncio.sleep(10)
         msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
         if 'rateLimitExceeded' in msg:
+          LOGGER.info(f'msg : {msg}')
           sent_message.edit(f"{msg}\n\n trying again in 10 sec")
           await asyncio.sleep(10)
           msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
@@ -53,6 +54,7 @@ async def _download(client, message):
           LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
       else:
         LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
+      
       await sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
       try:
