@@ -80,6 +80,7 @@ async def _download(client, message):
         await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       else:
           await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
+          await asyncio.sleep(3)
           sw = "bbb"
 
       if sw == "bbb":
@@ -91,6 +92,7 @@ async def _download(client, message):
         except Exception as e:
           print(e)
           LOGGER.info(f'Error:{e}')
+          await sent_message.edit(f"Second Method Failed :\n\n{e}")
           try:
             os.remove(file_path)
           except:
