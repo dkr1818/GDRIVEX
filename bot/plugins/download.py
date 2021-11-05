@@ -44,12 +44,12 @@ async def _download(client, message):
         LOGGER.info(f'msg : {msg}')
         await sent_message.edit(f"{msg}\n\n trying again in 10 sec")
         await asyncio.sleep(10)
-        msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+        msg = GoogleDrive(user_id).upload_file(file_path)
         if 'rateLimitExceeded' in msg:
           LOGGER.info(f'msg : {msg}')
           await sent_message.edit(f"{msg}\n\n trying again in 10 sec")
           await asyncio.sleep(10)
-          msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+          msg = GoogleDrive(user_id).upload_file(file_path)
         else:
           LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
       else:
@@ -103,11 +103,11 @@ async def _download(client, message):
       if 'rateLimitExceeded' in msg:
         await sent_message.edit(f"{msg}\n\n trying again in 10 sec")
         await asyncio.sleep(10)
-        msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+        msg = GoogleDrive(user_id).upload_file(file_path)
         if 'rateLimitExceeded' in msg:
           await sent_message.edit(f"{msg}\n\n trying again in 10 sec")
           await asyncio.sleep(10)
-          msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+          msg = GoogleDrive(user_id).upload_file(file_path)
       await sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
       try:
@@ -173,11 +173,11 @@ def _ytdl(client, message):
       if 'rateLimitExceeded' in msg:
         sent_message.edit(f"{msg}\n\n trying again in 10 sec")
         time.sleep(10)
-        msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+        msg = GoogleDrive(user_id).upload_file(file_path)
         if 'rateLimitExceeded' in msg:
           sent_message.edit(f"{msg}\n\n trying again in 10 sec")
           time.sleep(10)
-          msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
+          msg = GoogleDrive(user_id).upload_file(file_path)
       sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
       try:
