@@ -80,9 +80,12 @@ async def _download(client, message):
       LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
       await sent_message.edit(Messages.DOWNLOADING.format(link))
       
+      time.sleep(1)
       result, file_path = download_file2(link, dl_path)
       if result == True:
+        time.sleep(1)
         await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+        time.sleep(1)
       else:
         await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
         await asyncio.sleep(3)
