@@ -84,9 +84,9 @@ async def _download(client, message):
       if result == True:
         await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
       else:
-          await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
-          await asyncio.sleep(3)
-          sw = "bbb"
+        await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
+        await asyncio.sleep(3)
+        sw = "bbb"
 
       if sw == "bbb":
         await sent_message.edit(f"Trying to Download with Second Method !\n\n`{link}`")
