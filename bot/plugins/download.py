@@ -153,12 +153,12 @@ def _telegram_file(client, message):
   if 'rateLimitExceeded' in msg:
     sent_message.edit(f"{msg}\n\n trying again in 5 sec")
     time.sleep(5)
-    await sent_message.edit(f"`uploading 2nd ...`")
+    sent_message.edit(f"`uploading 2nd ...`")
     msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
     if 'rateLimitExceeded' in msg:
       sent_message.edit(f"{msg}\n\n trying again in 5 sec")
       time.sleep(5)
-      await sent_message.edit(f"`uploading 3rd ...`")
+      sent_message.edit(f"`uploading 3rd ...`")
       msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   sent_message.edit(msg)
   LOGGER.info(f'Deleteing: {file_path}')
@@ -182,12 +182,12 @@ def _ytdl(client, message):
       if 'rateLimitExceeded' in msg:
         sent_message.edit(f"{msg}\n\n trying again in 5 sec")
         time.sleep(5)
-        await sent_message.edit(f"`uploading 2nd ...`")
+        sent_message.edit(f"`uploading 2nd ...`")
         msg = GoogleDrive(user_id).upload_file(file_path)
         if 'rateLimitExceeded' in msg:
           sent_message.edit(f"{msg}\n\n trying again in 5 sec")
           time.sleep(5)
-          await sent_message.edit(f"`uploading 3rd ...`")
+          sent_message.edit(f"`uploading 3rd ...`")
           msg = GoogleDrive(user_id).upload_file(file_path)
       sent_message.edit(msg)
       LOGGER.info(f'Deleteing: {file_path}')
