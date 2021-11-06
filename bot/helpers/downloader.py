@@ -25,7 +25,7 @@ def download_file2(url, dl_path):
     else:
       sw1 = "bbb"
   
-  if sw1 = "bbb":
+  if sw1 == "bbb":
     try:
       filename = wget.download(url, dl_path)
       #return True, os.path.join(f"{DOWNLOAD_DIRECTORY}/{filename}")
