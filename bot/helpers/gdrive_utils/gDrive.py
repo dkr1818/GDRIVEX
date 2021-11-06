@@ -167,7 +167,10 @@ class GoogleDrive:
           else:
             return f"**ERROR:** {reason}"
       except Exception as e:
-        return f"**ERROR:** ```{e}```"
+        #return f"**ERROR:** ```{e}```"
+        uploaded_file = self.__service.files().create(body=body, media_body=media_body, fields='id', supportsTeamDrives=True).execute()
+        file_id = uploaded_file.get('id')
+        return Messages.UPLOADED_SUCCESSFULLY.format(filename, self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file_id), filesize)
 
   @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(5),
     retry=retry_if_exception_type(HttpError), before=before_log(LOGGER, logging.DEBUG))
