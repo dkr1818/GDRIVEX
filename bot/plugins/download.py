@@ -76,59 +76,59 @@ async def _download(client, message):
         link = link.strip()
         filename = os.path.basename(link)
         dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
-      
-      #LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
-      await sent_message.edit(Messages.DOWNLOADING.format(link))
-      
-      #time.sleep(1)
-      result, file_path = download_file2(link, dl_path)
-      if result == True:
-        #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
-        #fn = os.path.basename(file_path)
-        #sz = humanbytes(os.path.getsize(file_path)
-        await sent_message.edit(f"uploading 1st ...")
-        sw = "ccc"
-      else:
-        await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
-        await asyncio.sleep(3)
-        sw = "bbb"
 
-      if sw == "bbb":
-        await sent_message.edit(f"Trying to Download with Second Method !\n\n`{link}`")
-        start = time.time()
-        try:
-          file_path = await download_file(link, dl_path, sent_message, start, client)
-          fn = os.path.basename(file_path)
-          sz = humanbytes(os.path.getsize(file_path)
-          await sent_message.edit(f"uploading 1st ...")
+        #LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
+        await sent_message.edit(Messages.DOWNLOADING.format(link))
+      
+        #time.sleep(1)
+        result, file_path = download_file2(link, dl_path)
+        if result == True:
           #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
-        except Exception as e:
-          print(e)
-          LOGGER.info(f'Error:{e}')
-          await sent_message.edit(f"Second Method Failed :\n\n{e}")
-          try:
-            os.remove(file_path)
-          except:
-            pass
-          return
+          #fn = os.path.basename(file_path)
+          #sz = humanbytes(os.path.getsize(file_path)
+          await sent_message.edit(f"uploading 1st ...")
+          sw = "ccc"
+        else:
+          await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
+          await asyncio.sleep(3)
+          sw = "bbb"
 
-      msg = GoogleDrive(user_id).upload_file(file_path)
-      if 'rateLimitExceeded' in msg:
-        await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
-        await asyncio.sleep(5)
-        await sent_message.edit(f"`uploading 2nd ...`")
+        if sw == "bbb":
+          await sent_message.edit(f"Trying to Download with Second Method !\n\n`{link}`")
+          start = time.time()
+          try:
+            file_path = await download_file(link, dl_path, sent_message, start, client)
+            fn = os.path.basename(file_path)
+            sz = humanbytes(os.path.getsize(file_path)
+            await sent_message.edit(f"uploading 1st ...")
+            #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+          except Exception as e:
+            print(e)
+            LOGGER.info(f'Error:{e}')
+            await sent_message.edit(f"Second Method Failed :\n\n{e}")
+            try:
+              os.remove(file_path)
+            except:
+              pass
+            return
+
         msg = GoogleDrive(user_id).upload_file(file_path)
         if 'rateLimitExceeded' in msg:
           await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
           await asyncio.sleep(5)
-          await sent_message.edit(f"`uploading 3rd ...`")
+          await sent_message.edit(f"`uploading 2nd ...`")
           msg = GoogleDrive(user_id).upload_file(file_path)
-      await sent_message.edit(msg)
-      LOGGER.info(f'Deleteing: {file_path}')
-      try:
-        os.remove(file_path)
-      except:
-        pass 
+          if 'rateLimitExceeded' in msg:
+            await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
+            await asyncio.sleep(5)
+            await sent_message.edit(f"`uploading 3rd ...`")
+            msg = GoogleDrive(user_id).upload_file(file_path)
+        await sent_message.edit(msg)
+        LOGGER.info(f'Deleteing: {file_path}')
+        try:
+          os.remove(file_path)
+        except:
+          pass 
         
 @Client.on_message(filters.private & filters.incoming & (filters.document | filters.audio | filters.video | filters.photo) & CustomFilters.auth_users)
 def _telegram_file(client, message):
