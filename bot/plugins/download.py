@@ -86,7 +86,7 @@ async def _download(client, message):
         #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         #fn = os.path.basename(file_path)
         #sz = humanbytes(os.path.getsize(file_path)
-        #await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")
+        await sent_message.edit(f"uploading 1st ...")
         sw = "ccc"
       else:
         await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
@@ -100,7 +100,7 @@ async def _download(client, message):
           file_path = await download_file(link, dl_path, sent_message, start, client)
           fn = os.path.basename(file_path)
           sz = humanbytes(os.path.getsize(file_path)
-          await sent_message.edit(f"`uploading 1st ...`\n\n{fn}[{sz}]")
+          await sent_message.edit(f"uploading 1st ...")
           #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         except Exception as e:
           print(e)
@@ -111,10 +111,7 @@ async def _download(client, message):
           except:
             pass
           return
-      
-      fn = os.path.basename(file_path)
-      sz = humanbytes(os.path.getsize(file_path)
-      await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")                    
+
       msg = GoogleDrive(user_id).upload_file(file_path)
       if 'rateLimitExceeded' in msg:
         await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
