@@ -77,15 +77,16 @@ async def _download(client, message):
         filename = os.path.basename(link)
         dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
       
-      LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
+      #LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
       await sent_message.edit(Messages.DOWNLOADING.format(link))
       
       time.sleep(1)
       result, file_path = download_file2(link, dl_path)
       if result == True:
-        time.sleep(1)
-        await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
-        time.sleep(1)
+        #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+        fn = os.path.basename(file_path)
+        sz = humanbytes(os.path.getsize(file_path)
+        await sent_message.edit(f"`uploading 1st ...`\n\n{fn}[{sz}]")
       else:
         await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
         await asyncio.sleep(3)
@@ -96,7 +97,10 @@ async def _download(client, message):
         start = time.time()
         try:
           file_path = await download_file(link, dl_path, sent_message, start, client)
-          await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
+          fn = os.path.basename(file_path)
+          sz = humanbytes(os.path.getsize(file_path)
+          await sent_message.edit(f"`uploading 1st ...`\n\n{fn}[{sz}]")
+          #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
         except Exception as e:
           print(e)
           LOGGER.info(f'Error:{e}')
