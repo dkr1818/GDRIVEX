@@ -111,6 +111,8 @@ async def _download(client, message):
           except:
             pass
           return
+      
+      LOGGER.info(f'checkpoint')
       msg = GoogleDrive(user_id).upload_file(file_path)
       LOGGER.info(f'USER LOG PRINT : {msg}')
       await sent_message.edit(f"msg : {msg}")
