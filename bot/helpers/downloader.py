@@ -9,35 +9,25 @@ from bot import DOWNLOAD_DIRECTORY, LOGGER
 
 
 def download_file2(url, dl_path):
+  
   sw1 = "aaa"
-  try:
-    #dl = SmartDL(url, dl_path, progress_bar=False)
-    dl = SmartDL(url, dl_path, progress_bar=True)
-    LOGGER.info(f'Downloading: {url} in {dl_path}')
-    dl.start()
-    dl.get_dest()
+  dl = SmartDL(url, dl_path, progress_bar=False)
+  LOGGER.info(f'Downloading: {url} in {dl_path}')
+  dl.start()
+  dl.get_dest()
+  sz = os.path.getsize(dl_path)
+  if sz:
     return True, dl_path
-  except HTTPError as error:
-    return False, error
-  except Exception as error:
-    if '[400 MESSAGE_NOT_MODIFIED]' in error:
-      return True, dl_path
-    else:
-      sw1 = "bbb"
+  else:
+    sw1 = "bbb"
   
   if sw1 == "bbb":
-    try:
-      filename = wget.download(url, dl_path)
-      #return True, os.path.join(f"{DOWNLOAD_DIRECTORY}/{filename}")
+    wget.download(url, dl_path)
+    sz = os.path.getsize(dl_path)
+    if sz:
       return True, dl_path
-    except HTTPError as err2:
-      return False, err2
-    except Exception as err2:
-      if '[400 MESSAGE_NOT_MODIFIED]' in err2:
-        return True, dl_path
-      else:
-        return False, err2
-
+    else:
+      return False, "Erorr"
 
 def utube_dl(link):
   ytdl_opts = {
