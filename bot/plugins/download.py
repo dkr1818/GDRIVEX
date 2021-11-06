@@ -112,6 +112,8 @@ async def _download(client, message):
             pass
           return
       msg = GoogleDrive(user_id).upload_file(file_path)
+      LOGGER.info(f'USER LOG PRINT : {msg}')
+      await sent_message.edit(f"msg : {msg}")
       if 'rateLimitExceeded' in msg:
         await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
         await asyncio.sleep(5)
