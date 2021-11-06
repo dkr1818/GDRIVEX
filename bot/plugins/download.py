@@ -80,13 +80,14 @@ async def _download(client, message):
       #LOGGER.info(f'ID:{user_id} URL: {link} Filename: {filename} DL_PATH: {dl_path}')
       await sent_message.edit(Messages.DOWNLOADING.format(link))
       
-      time.sleep(1)
+      #time.sleep(1)
       result, file_path = download_file2(link, dl_path)
       if result == True:
         #await sent_message.edit(Messages.DOWNLOADED_SUCCESSFULLY.format(os.path.basename(file_path), humanbytes(os.path.getsize(file_path))))
-        fn = os.path.basename(file_path)
-        sz = humanbytes(os.path.getsize(file_path)
-        await sent_message.edit(f"`uploading 1st ...`\n\n{fn}[{sz}]")
+        #fn = os.path.basename(file_path)
+        #sz = humanbytes(os.path.getsize(file_path)
+        #await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")
+        sw = "ccc"
       else:
         await sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
         await asyncio.sleep(3)
@@ -110,7 +111,10 @@ async def _download(client, message):
           except:
             pass
           return
-          
+      
+      fn = os.path.basename(file_path)
+      sz = humanbytes(os.path.getsize(file_path)
+      await sent_message.edit(f"`uploading 1st ...`\n\n{fn} [{sz}]")                    
       msg = GoogleDrive(user_id).upload_file(file_path)
       if 'rateLimitExceeded' in msg:
         await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
