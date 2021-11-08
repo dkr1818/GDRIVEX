@@ -212,7 +212,11 @@ def _ytdl(client, message):
     message.reply_text(Messages.PROVIDE_YTDL_LINK, quote=True)
 
 @Client.on_message(filters.incoming & filters.private & filters.command(["bbb"]) & CustomFilters.auth_users)
-async def _ru2(client, message):
+async def _ru2(client, u):
+  if not u.reply_to_message:
+    await u.reply_text(text=f"Reply To Your Direct Link !", quote=True)
+    return
+  message = u.reply_to_message
   user_id = message.from_user.id
   if not message.media:
     sent_message = await message.reply_text(text=f"🕵️ `Processing...`", quote=True)
