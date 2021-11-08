@@ -210,3 +210,67 @@ def _ytdl(client, message):
       sent_message.edit(Messages.DOWNLOAD_ERROR.format(file_path, link))
   else:
     message.reply_text(Messages.PROVIDE_YTDL_LINK, quote=True)
+
+@Client.on_message(filters.incoming & filters.private & filters.command(["bbb"]) & CustomFilters.auth_users)
+async def _ru2(client, message):
+  user_id = message.from_user.id
+  if not message.media:
+    sent_message = await message.reply_text(text=f"🕵️ `Processing...`", quote=True)
+    if message.command:
+      link = message.command[1]
+    else:
+      link = message.text
+    if 'drive.google.com' in link:
+      await sent_message.edit(f"It is not a Direct Link !")
+      return
+    elif 'mega.nz' in link:
+      await sent_message.edit(f"It is not a Direct Link !")
+      return
+    else:
+      if '|' in link:
+        link, filename = link.split('|')
+        link = link.strip()
+        filename = filename.strip()
+        dl_path = os.path.join(f'{DOWNLOAD_DIRECTORY}{filename}')
+      else:
+        link = link.strip()
+        filename = os.path.basename(link)
+        dl_path = os.path.join(DOWNLOAD_DIRECTORY, os.path.basename(link))
+      
+      await sent_message.edit(Messages.DOWNLOADING.format(link))
+      start = time.time()
+      try:
+        file_path = await download_file(link, dl_path, sent_message, start, client)
+      except Exception as e:
+        LOGGER.info(f'bbb Download Failed:{e}')
+        await sent_message.edit(f"bbb Download Failed:\n\n{e}")
+        try:
+          os.remove(file_path)
+          LOGGER.info(f'bbb : file removed.')
+        except:
+          pass
+        return
+      
+      fn = os.path.basename(file_path)
+      sz = humanbytes(os.path.getsize(file_path))
+      await sent_message.edit(f"`bbb : uploading ...`\n\n{fn} [{sz}]")
+      LOGGER.info(f'bbb : uploading')
+      msg = GoogleDrive(user_id).upload_file(file_path)
+      LOGGER.info(f'bbb USER LOG PRINT : {msg}')
+      await sent_message.edit(f"msg : {msg}")
+      if 'rateLimitExceeded' in msg:
+        await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
+        await asyncio.sleep(5)
+        await sent_message.edit(f"`uploading 2nd ...`\n\n{fn} [{sz}]")
+        msg = GoogleDrive(user_id).upload_file(file_path)
+        if 'rateLimitExceeded' in msg:
+          await sent_message.edit(f"{msg}\n\n trying again in 5 sec")
+          await asyncio.sleep(5)
+          await sent_message.edit(f"`uploading 3rd ...`\n\n{fn} [{sz}]")
+          msg = GoogleDrive(user_id).upload_file(file_path)
+      await sent_message.edit(msg)
+      try:
+        os.remove(file_path)
+        LOGGER.info(f'bbb Deleted: {file_path}')
+      except:
+        pass
