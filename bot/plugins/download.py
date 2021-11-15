@@ -29,6 +29,7 @@ async def _download(client, message):
       LOGGER.info(f'Copy:{user_id}: {link}')
       msg = GoogleDrive(user_id).clone(link)
       await sent_message.edit(msg)
+      await message.reply_text(text=f"you can send new task now !")
     elif 'mega.nz' in link:
       LOGGER.info(f'ID:{user_id} URL: {link}')
       file_path = await megadl(client, message, sent_message)
@@ -61,6 +62,7 @@ async def _download(client, message):
         LOGGER.info(f'SUCCESSFULLY UPLOADED TO GDRIVE.')
       
       await sent_message.edit(msg)
+      await message.reply_text(text=f"you can send new task now !")
       LOGGER.info(f'Deleteing: {file_path}')
       try:
         os.remove(file_path)
@@ -127,6 +129,7 @@ async def _download(client, message):
           await sent_message.edit(f"`uploading 3rd ...`\n\n{fn} [{sz}]")
           msg = GoogleDrive(user_id).upload_file(file_path)
       await sent_message.edit(msg)
+      await message.reply_text(text=f"you can send new task now !")
       LOGGER.info(f'Deleteing: {file_path}')
       try:
         os.remove(file_path)
@@ -172,6 +175,7 @@ def _telegram_file(client, message):
       sent_message.edit(f"`uploading 3rd ...`")
       msg = GoogleDrive(user_id).upload_file(file_path, file.mime_type)
   sent_message.edit(msg)
+  message.reply_text(text=f"you can send new task now !")
   LOGGER.info(f'Deleteing: {file_path}')
   try:
     os.remove(file_path)
@@ -201,6 +205,7 @@ def _ytdl(client, message):
           sent_message.edit(f"`uploading 3rd ...`")
           msg = GoogleDrive(user_id).upload_file(file_path)
       sent_message.edit(msg)
+      message.reply_text(text=f"you can send new task now !")
       LOGGER.info(f'Deleteing: {file_path}')
       try:
         os.remove(file_path)
@@ -273,6 +278,7 @@ async def _ru2(client, u):
           await sent_message.edit(f"`uploading 3rd ...`\n\n{fn} [{sz}]")
           msg = GoogleDrive(user_id).upload_file(file_path)
       await sent_message.edit(msg)
+      await message.reply_text(text=f"you can send new task now !")
       try:
         os.remove(file_path)
         LOGGER.info(f'bbb Deleted: {file_path}')
